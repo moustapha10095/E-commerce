@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Confirm Checkout AliExprass !{% endblock %}
+
+{% block scriptStripe %}
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock scriptStripe %}
+{% block body %}
+
+{{ include("partials/title_section.html.twig", {'name':'Confirm Checkout'}) }}
+
+<div class="section checkout">
+	<div class="container">
+        
+        <div class="row">
+        	<div class="col-md-6">
+                <div class="heading_s1">
+                        <h4>Please, Verify Your delivery Address</h4>
+
+                        <div class="content" id="address">
+                            {{ address | replace({'[spr]' : '<br>'}) | raw}}
+                            <a href="{{ path('address_edit',{'id': address.id})}}" class="btn btn-fill-out mt-1">Edit Address</a>
+                            <a href="{{ path('checkout_edit')}}" class="btn btn-fill-out mt-1">Change Address</a>
+                        </div>
+                        
+                </div>
+                <div class="heading_s1">
+                    <h4>Please, Verify Your carrier</h4>
+                    <div class="content" id="carrier">
+                        {{ carrier  | replace({'[spr]' : '<br>'}) | raw }}
+                        <a href="{{ path('checkout_edit')}}" class="btn btn-fill-out mt-1">Change Carrier</a>
+                    </div>
+                </div>
+                {% if informations %}
+                    <div class="heading_s1">
+                        <h4>Please, Verify Additional information</h4>
+                        <div class="form-group mb-0" id="informations">
+                            {{ informations }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <div class="order_review">
+                    <div class="heading_s1">
+                        <h4>Your Orders</h4>
+                    </div>
+                    <div class="table-responsive order_table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tbody>
+                                    {% for element in cart.products %}
+                                    <tr>
+                                        <td> {{ element.product.name }} <span class="product-qty">x {{ element.quantity }}</span></td>
+                                        <td>$ {{ element.product.price/100 }}</td>
+                                    </tr>
+                                    {% endfor %}
+ 
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>SubTotal HT</th>
+                                    <td class="product-subtotal">${{ cart.data.subTotalHT }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Taxe</th>
+                                    <td class="product-subtotal">${{ cart.data.Taxe }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping ( {{carrier.name}})</th>
+                                    <td class="product-subtotal">${{ carrier.price/100 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <td class="product-subtotal">${{ cart.data.subTotalTTC + carrier.price/100 }}</td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                    <div class="payment_method">
+                        <div class="heading_s1">
+                            <h4>Payment</h4>
+                        </div>
+                        <button type="submit" id="checkout-button" 
+                        class="btn btn-fill-out btn-block">
+                        Paid | ${{ cart.data.subTotalTTC + carrier.price/100 }}
+                    </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var stripe = Stripe("pk_test_51ICmCqGJ92ssJiXRdlkk67IhSWwT3hlTPGbtJeWUNHiihcXDY7AKqbNKFOKRgjDC11Feei2u0n1GDjVw7L7gxMoq00VVoepy9o");
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+      fetch("/create-checkout-session/{{ reference }}", {
+        method: "POST",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+    </script>
+{% endblock %}
