@@ -97,6 +97,11 @@ class Product
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $Video;
+
  
 
     public function __construct()
@@ -321,6 +326,18 @@ class Product
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->Video;
+    }
+
+    public function setVideo(?string $Video): self
+    {
+        $this->Video = $Video;
 
         return $this;
     }

@@ -23,7 +23,7 @@ class CarrierCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextField::new('description'),
-            MoneyField::new('price')->setCurrency('USD'),
+            MoneyField::new('price')->setCurrency('EUR'),
             DateTimeField::new('createdAt')
         ];
     }

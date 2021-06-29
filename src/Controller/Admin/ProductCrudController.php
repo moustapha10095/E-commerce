@@ -31,7 +31,7 @@ class ProductCrudController extends AbstractCrudController
             SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
             TextEditorField::new('description')->hideOnIndex(),
             TextEditorField::new('moreInformations')->hideOnIndex(),
-            MoneyField::new('price')->setCurrency('USD'),
+            MoneyField::new('price')->setCurrency('EUR'), 
             IntegerField::new('quantity'),
             TextField::new('tags'),
             BooleanField::new('isBestSeller','Best Seller'),
@@ -40,9 +40,10 @@ class ProductCrudController extends AbstractCrudController
             BooleanField::new('isSpecialOffer', 'Special Offer'),
             AssociationField::new('category'),
             ImageField::new('image')->setBasePath('/assets/uploads/products/')
-                                    ->setUploadDir('../../../../../public/assets/uploads/products/')
-                                    ->setUploadedFileNamePattern('[randomhash].[extension]')
-                                    ->setRequired(false),
+                                    ->setUploadDir('../../../../../../../public/assets/uploads/products/') // le chemin du upload dir 
+                                    ->setUploadedFileNamePattern('[randomhash].[extension]') // renommer l'image et lui donner une extension 
+                                    ->setRequired(false),// image pas obligatoire 
+            TextField::new('video'),
             DateTimeField::new('createdAt')
         ];
     }

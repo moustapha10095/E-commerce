@@ -26,7 +26,7 @@ class HomeSliderCrudController extends AbstractCrudController
             TextField::new('buttonMessage'),
             TextField::new('buttonURL'),
             ImageField::new('image')->setBasePath('/assets/uploads/slider/')
-                                    ->setUploadDir('../../../../../public/assets/uploads/slider/')
+                                    ->setUploadDir('../../../../../../../public/assets/uploads/slider/')
                                     ->setUploadedFileNamePattern('[randomhash].[extension]')
                                     ->setRequired(false),
             BooleanField::new('isDisplayed', 'Display')

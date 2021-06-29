@@ -80,7 +80,7 @@
                                                 <td>{{ order.id }}</td>
                                                 <td>{{ order.createdAt | date('d/m/Y')}}</td>
                                                 <td>Processing</td>
-                                                <td>${{ order.subTotalTTC/100 }} for {{ order.quantity}} item</td>
+                                                <td>£{{ order.subTotalTTC/100 }} for {{ order.quantity}} item</td>
                                                 <td><a href="{{ path('account_order_details',{'id':order.id})}}" class="btn btn-fill-out btn-sm">View</a></td>
                                             </tr>
                                             {% endfor %}
