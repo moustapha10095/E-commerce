@@ -8,6 +8,7 @@ d'une video expliquant comment celui-ci doit etre utiliser.
 # les fonctionnalites developpes
   
 on a deux espaces sur le site l'espace client et l'espace administrateur
+pour acceder a l'espace administration faudra mettre ce lien sur la barre de recherche : 127.0.0.1:8000/admin
 
   # dans l'espace administrateur on peut:
 - supprimer un client 
