@@ -48,6 +48,6 @@ Entity
 - User :Donnée utilisateur
 
 
-Diagramme d’utilisation
+                  Diagramme d’utilisation
 
 ![image](https://user-images.githubusercontent.com/55878870/124014182-7d6c8680-d9e3-11eb-9a39-523b35bb021b.png)
