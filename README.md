@@ -57,5 +57,5 @@ Voici les instructions pour utiliser le code source :
 
 2- Placez-vous à la racine du projet et installez les dépendances avec la commande:  composer install
 
-3- Lancez le serveur avec la commande:  symfony serve ou symfony serve: start
+3- Lancez le serveur avec la commande:  symfony serve ou symfony serve: start -d
 
